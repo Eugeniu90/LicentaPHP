@@ -1,0 +1,31 @@
+filebeat.prospectors:
+
+# Each - is a prospector. Most options can be set at the prospector level, so
+# you can use different prospectors for various configurations.
+# Below are the prospector specific configurations.
+
+- input_type: log
+
+  # Paths that should be crawled and fetched. Glob based paths.
+  paths:
+    - licenta/nginx:1.0uxp/logs/mint_events.log
+
+  fields:
+    type: "mint-metric"
+
+  fields_under_root: true
+  
+output.logstash:
+  # The Logstash hosts
+  # hosts: ["localhost:5044"]
+  hosts: ["elk:5044"]
+  # Optional SSL. By default is off.
+  # List of root certificates for HTTPS server verifications
+  ssl.certificate_authorities: [" uxp/config/mint-filebeat/conf/filebeat.crt"]
+  # Certificate for SSL client authentication
+  ssl.certificate: " uxp/config/mint-filebeat/conf/filebeat.crt"
+  # Client Certificate Key
+  ssl.key: " uxp/config/mint-filebeat/conf/filebeat.key"
+
+
+  

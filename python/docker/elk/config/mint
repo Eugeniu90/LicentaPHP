@@ -1,0 +1,32 @@
+### MINT-specific Patterns ###
+
+# MINT Apache Log
+MINTAPACHELOG %{COMMONAPACHELOG} "%{DATA:xForwardedHost}" "%{DATA:referrer}" "%{DATA:agent}" ("%{DATA:threadName}")? %{NUMBER:latency}
+
+
+# MMM dd, yyyy HH:mm:ss eg: Jan 9, 2014 7:13:13 AM
+CATALINA_DATESTAMP %{MONTH} %{MONTHDAY}, 20%{YEAR} %{HOUR}:?%{MINUTE}(?::?%{SECOND}) (?:AM|PM)
+# eg: [localhost-startStop-1] 11Jun15-16:53:26
+GAPLESS_MONTH (?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)
+MINT_LOG4J_PREFIX \[%{DATA}\] %{MONTHDAY}%{GAPLESS_MONTH}%{YEAR}-%{HOUR}:?%{MINUTE}(?::?%{SECOND})
+THREADNAME \[[A-Za-z0-9_. -]+\]
+
+# MINT Platform/SAM patterns
+MINTPLATFORMSTDOUTPUT (\[%{DATA:threadName}\] )?(?<timestamp>\d{2,2}[A-Za-z]{3,3}\d{2,2}-\d{2,2}:\d{2,2}:\d{2,2}) %{LOGLEVEL:severity} %{GREEDYDATA:detail}
+MINTPLATFORMERROROUTPUT (\[%{DATA:threadName}\] )?(?<timestamp>\d{2,2}[A-Za-z]{3,3}\d{2,2}-\d{2,2}:\d{2,2}:\d{2,2}) %{LOGLEVEL:severity}%{GREEDYDATA:detail}
+MINTPLATFORMTOMCATOUTPUT %{CATALINA_DATESTAMP:timestamp} %{JAVACLASS:class} %{JAVAMETHOD:method} %{LOGLEVEL:severity}: %{GREEDYDATA:detail}
+MINTTOMCATOUTPUT %{TIMESTAMP_ISO8601:timestamp}(\s+%{LOGLEVEL:severity})?(\s+%{THREADNAME:threadName})? %{JAVACLASS:class}:%{POSINT:lineNumber}(\s+%{GREEDYDATA:detail})?
+#MINTPLATFORMTOMCATOUTPUT %{LOGLEVEL:severity}: %{GREEDYDATA:detail}
+MINTMETRICOUTPUT (\[%{DATA:threadName}\] )?(?<timestamp>\d{2,2}[A-Za-z]{3,3}\d{2,2}-\d{2,2}:\d{2,2}:\d{2,2}) %{LOGLEVEL:severity} \(%{JAVAFILE}:%{NUMBER}\)-%{GREEDYDATA:[@metadata][metric]}
+MINTRAWMETRICOUTPUT %{NUMBER:unixTimestamp}-%{GREEDYDATA:detail}
+
+MINTBMSLOGOUTPUT %{LOGLEVEL:severity}: \[%{IP:serverIP}\]
+
+# MINT Proxy patterns
+MINTPROXYOUTPUT (?<timestamp>\d{4,4}/\d{2,2}/\d{2,2} \d{2,2}:\d{2,2}:\d{2,2}) \[%{DATA:severity}\] %{BASE10NUM:processId}#%{BASE10NUM:threadId}: (\*%{BASE10NUM:connectionId})? (\[lua\])? (%{DATA:scriptName}:%{BASE10NUM:scriptLine}:)? %{GREEDYDATA:detail}
+
+#  jenkins/MySQL patterns
+MYSQLERROR (?<timestamp>\d{6,6} \d{2,2}:\d{2,2}:\d{2,2}) \[%{LOGLEVEL:severity}\] %{GREEDYDATA:detail}
+
+# RabbitMQ patterns
+RABBITMQ =%{LOGLEVEL:severity} REPORT==== (?<timestamp>%{NUMBER}-%{MONTH}-%{YEAR}::%{HOUR}:%{MINUTE}:%{SECOND}) ===\n%{GREEDYDATA:detail}

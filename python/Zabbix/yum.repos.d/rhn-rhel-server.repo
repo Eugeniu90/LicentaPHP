@@ -1,0 +1,6 @@
+[RHN-ECX-Mirror]
+name=Red Hat Server 6.8 ECX Mirror
+baseurl=http://172.23.27.30/rhelrepo/getPackage/
+gpgkey=http://172.23.27.30/rhelrepo/RPM-GPG-KEY-redhat-release
+enabled=1
+gpgcheck=1

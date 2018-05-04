@@ -1,0 +1,6 @@
+[epel]
+name=Extra Packages for Enterprise Linux 6 - $basearch
+baseurl=http://172.23.27.29/epelrepo/
+gpgkey=http://172.23.27.29/epelrepo/RPM-GPG-KEY-EPEL-6
+enabled=1
+gpgcheck=1

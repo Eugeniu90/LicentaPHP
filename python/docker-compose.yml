@@ -1,0 +1,35 @@
+version: '3.5'
+services:
+  elk:
+    image: licenta/elk:1.0
+    ports:
+      - "5601:5601"
+      - "9200:9200"
+      - "5044:5044"
+    volumes:
+      - ./docker/elk/config/kibana.yml:/opt/kibana/config/kibana.yml
+      - ./docker/elk/config/30-output.conf:/etc/logstash/conf.d/30-output.conf
+      - ./docker/elk/config/02-beats-input.conf:/etc/logstash/conf.d/02-beats-input.conf
+      - ./docker/elk/config/elasticsearch.yml:/opt/elasticsearch/config/elasticsearch.yml
+      - ./docker/elk/config/filebeat.crt:/opt/uxp/config/mint-filebeat/conf/filebeat.crt
+      - ./docker/elk/config/filebeat.key:/opt/uxp/config/mint-filebeat/conf/filebeat.key
+      - ./docker/elk/config/filebeat.csr:/opt/uxp/config/mint-filebeat/conf/filebeat.csr
+      - ./docker/elk/config/filebeat.crt:/usr/share/ca-certificates/elk/filebeat.crt
+      - ./docker/elk/config/ca-certificates.conf:/etc/ca-certificates.conf
+      - ./docker/elk/config/filter-2-mint-metric-external-systems.conf:/etc/logstash/conf.d/filter-2-mint-metric-external-systems.conf
+      - ./docker/elk/config/filter-2-mint-metric.conf:/etc/logstash/conf.d/filter-2-mint-metric.conf
+      - ./docker/elk/config/mint:/etc/logstash/conf.d/patterns/mint
+
+  filebeat:
+    image: licenta/filebeat:1.0
+    ports:
+       - "5043:5043"
+    volumes:
+       - ./docker/elk/config/mint_events.log:/opt/uxp/logs/mint_events.log
+       - ./docker/elk/config/filebeat.yml:/opt/uxp/config/mint-filebeat/conf/filebeat.yml
+       - ./docker/elk/config/filebeat.crt:/opt/uxp/config/mint-filebeat/conf/filebeat.crt
+       - ./docker/elk/config/filebeat.key:/opt/uxp/config/mint-filebeat/conf/filebeat.key
+       - ./docker/elk/config/filebeat.csr:/opt/uxp/config/mint-filebeat/conf/filebeat.csr
+       - ./docker/elk/config/filebeat.crt:/usr/share/ca-certificates/elk/filebeat.crt
+       - ./docker/elk/config/ca-certificates.conf:/etc/ca-certificates.conf
+       - ./docker/elk/config/filebeat.crt:/etc/ssl/certs/filebeat.crt

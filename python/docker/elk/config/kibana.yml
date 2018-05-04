@@ -1,0 +1,3 @@
+server.port: 5601
+server.host: "elk"
+elasticsearch.url: "http://elk:9200"

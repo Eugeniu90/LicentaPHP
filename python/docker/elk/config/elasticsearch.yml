@@ -1,0 +1,5 @@
+http.port: 9200
+network.host: "elk"
+path.data:  uxp/apps/mint-elasticsearch/data
+path.home:  uxp/apps/mint-elasticsearch
+path.logs:  uxp/apps/mint-elasticsearch/logs

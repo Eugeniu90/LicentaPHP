@@ -1,0 +1,24 @@
+input {
+  beats {
+    port => 5044
+    ssl.enabled => false
+  }
+}
+output {
+    elasticsearch {
+            # Elasticsearch hostname or IP address for Elasticsearch unicast discovery. This is only required if normal multicast/cluster
+            # discovery won’t work in your environment.
+            hosts => "elk"
+            index => "uxdr-%{+YYYY-MM-dd_hh:mm}}"
+            # Defines the number of events to store in memory before flushing to Elasticsearch (default is 5000).
+            flush_size => 1
+            # The amount of time since last flush before a flush is forced (default is one second).
+            # If the buffer has not been filled since the idle flush time, Logstash will automatically flush the buffer
+            # to Elasticsearch.
+             idle_flush_time => 10
+            # The number of workers to use for this output (default 1).
+            # Output workers are no longer used in Logstash 5.1.1
+            # workers => 1
+                }
+}
+
