@@ -1,0 +1,19 @@
+[LGI-Release-Candidate]
+baseurl = https://lgi:fEeFg33rTmktapnP@nexus.uxpsystems.com/nexus/content/repositories/LGI-Release-Candidate
+enabled = 1
+gpgcheck = 1
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-MINT
+metadata_expire = 30
+name = MINT Repo for client builds
+proxy = https://172.23.29.156:3128
+sslverify = 0
+
+[thirdparty]
+baseurl = https://lgi:fEeFg33rTmktapnP@nexus.uxpsystems.com/nexus/content/repositories/thirdparty
+enabled = 1
+gpgcheck = 1
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-MINT
+metadata_expire = 30
+name = MINT Repo for third-party applications and dependencies
+proxy = https://172.23.29.156:3128
+sslverify = 0
